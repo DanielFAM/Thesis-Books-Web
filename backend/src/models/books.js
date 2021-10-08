@@ -8,6 +8,9 @@ const BookSchema = new Schema({
     editorial: { type: String },
     year: { type: Date, required: true },
     created_at: { type: Date, default: Date.now }
+},{
+    timestamps: true,
+    versionKey: false
 });
 
 module.exports = model('Book', BookSchema);

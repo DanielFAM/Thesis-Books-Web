@@ -2,9 +2,21 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const userSchema = new Schema({
-    username: String,
-    email: String,
-    password: String
+    username: {
+        type: String, 
+        unique: true
+    },
+    email:{
+        type: String,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true
+    }
+},{
+    timestamps: true,
+    versionKey: false
 });
 
 //metodo de encriptación de contraseñas utilizando salt
