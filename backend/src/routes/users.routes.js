@@ -1,24 +1,18 @@
 const { Router } = require('express');
 const router = Router();
 
-const { getUsers, 
-        getUserById,
-        createUser,
-        deleteUser
-} = require('../controllers/users.controller');
+const usersCtrl = require('../controllers/users.controller');
 
-const { 
-        checkDuplicatedUsernameOrEmail
-} = require('../middlewares/verifySignup');
+const verifySignup = require('../middlewares/verifySignup');
 
 //retornar todos los usuarios registrados en BD
-router.get('/', getUsers);
+router.get('/', usersCtrl.getUsers);
 //retirnar usuario especifico basado en su ID
-router.get('/:id', getUserById);
+router.get('/:id', usersCtrl.getUserById);
 //Crear un nuevo usuario
-router.post('/create', checkDuplicatedUsernameOrEmail, createUser);
+router.post('/create', verifySignup.checkDuplicatedUsernameOrEmail, usersCtrl.createUser);
 //Borrar algun usuario en base a su ID
-router.delete('/delete/:id', deleteUser);
+router.delete('/delete/:id', usersCtrl.deleteUser);
 
 
 

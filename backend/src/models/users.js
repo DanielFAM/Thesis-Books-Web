@@ -3,11 +3,14 @@ const bcrypt = require('bcryptjs');
 
 const userSchema = new Schema({
     username: {
-        type: String, 
+        type: String,
+        required: true,
+        trim: true, 
         unique: true
     },
     email:{
         type: String,
+        required: true,
         unique: true
     },
     password: {
@@ -15,8 +18,7 @@ const userSchema = new Schema({
         required: true
     }
 },{
-    timestamps: true,
-    versionKey: false
+    timestamps: true
 });
 
 //metodo de encriptación de contraseñas utilizando salt
