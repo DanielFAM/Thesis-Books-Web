@@ -6,7 +6,7 @@ const Home = () => {
     const history = useHistory();
 
     const logOut = () => {
-        localStorage.setItem('rememberUser', 'false');
+        localStorage.setItem('userAutho', 'false');
         history.push("/")
     }
     return ((localStorage.getItem('rememberUser') === "true")
