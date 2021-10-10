@@ -3,7 +3,8 @@ const router = Router();
 
 const { signUp, 
         signIn, 
-        me 
+        me,
+        verifyToken 
 } = require('../controllers/auth.controller');
 
 const { 
@@ -18,5 +19,7 @@ router.get('/me', me);
 
 //Inicio de sesión del usuario
 router.post('/signin', signIn);
+
+router.get('/verifyToken', verifyToken);
 
 module.exports = router;

@@ -1,22 +1,30 @@
 const { Router } = require('express');
 const router = Router();
 
-const { getBooks, 
-        getBookById, 
-        createBook, 
-        deleteBook 
-} = require('../controllers/books.controller');
+const booksCtrl = require('../controllers/books.controller');
 
 //muestra todos los libros en la BD
-router.get('/', getBooks);
+router.get('/searchAll', booksCtrl.searchAll);
 
 //muestra un libro buscado por ID en la BD
-router.get('/:id', getBookById);
+router.get('/getDetail/:id', booksCtrl.getDetail);
 
-//creación de libros
-router.post('/create', createBook);
+router.get('/getMyBooks/:token', booksCtrl.getMyBooks);
+
+router.get('/getOneBookshelf/:id/:token', booksCtrl.getOneBookShelf);
+
+router.post('/addBook/:shelf/:volume/:token', booksCtrl.addBook);
+
+router.post('/moveBook/:from/:to/:volume/:token', booksCtrl.moveBook);
+
+router.post('/removeBook/:shelf/:volume/:token', booksCtrl.removeBook);
+
+router.post('/clearShelf/:shelf/:token', booksCtrl.clearShelf);
+
+/*creación de libros
+router.post('/create', );
 
 //borrar libro por ID
-router.delete('/delete/:id', deleteBook);
+router.delete('/delete/:id', );*/
 
 module.exports = router;
