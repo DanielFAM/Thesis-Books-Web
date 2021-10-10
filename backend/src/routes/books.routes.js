@@ -4,7 +4,7 @@ const router = Router();
 const booksCtrl = require('../controllers/books.controller');
 
 //muestra todos los libros en la BD
-router.get('/searchAll', booksCtrl.searchAll);
+router.get('/searchAll/:keyword/:startindex', booksCtrl.searchAll);
 
 //muestra un libro buscado por ID en la BD
 router.get('/getDetail/:id', booksCtrl.getDetail);

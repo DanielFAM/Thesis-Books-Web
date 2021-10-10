@@ -1,6 +1,10 @@
 const authCtrl = {};
 const User = require('../models/users');
 const jwt = require('jsonwebtoken');
+const { OAuth2Client } = require('google-auth-library');
+const { response } = require('express');
+
+const client = OAuth2Client("825534615979-g87f8lf5ssvnch65gqj8fdjk1rbqe8ei.apps.googleusercontent.com");
 
 authCtrl.signUp = async (req, res) => {
     const { username, email, password } = req.body;
@@ -67,6 +71,19 @@ authCtrl.verifyToken = async (req, res) => {
     } catch (error) {
         return res.status(401).json({message: 'unauthorized'});
     }
+};
+
+
+authCtrl.googleLogin = (req, res) => {
+    const { tokenId } = req.body;
+
+    client.verifyIdToken({tokenId, audience: '825534615979-g87f8lf5ssvnch65gqj8fdjk1rbqe8ei.apps.googleusercontent.com'})
+        .then(response => {
+            const {email_verified, name, email} = response.payload;
+            console.log(response.payload);
+        });
+
+    console.log();
 };
 
 module.exports = authCtrl;
