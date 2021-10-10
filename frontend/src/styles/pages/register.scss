@@ -1,0 +1,26 @@
+.register{
+    display: flex;
+    min-height: 100vh;    
+    &-imageContent {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: 50%;
+    }
+    &-imageText {
+        display: block;
+        color: white;
+        font-weight: 900;
+        font-size: 70px;
+        &_subtitle {
+            color: white;
+            font-size: 23px;
+        }
+    }
+    &-formContent {
+        display: flex;
+        justify-content: center;
+        width: 50%;
+    }
+}
