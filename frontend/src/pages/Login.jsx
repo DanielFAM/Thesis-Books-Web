@@ -8,23 +8,30 @@ import { GoogleLogin } from 'react-google-login';
 
 const Login = () => {
 
-    const responseGoogle = (respuesta) =>{
+    async const responseGoogle = (respuesta) => {
         console.log(respuesta)
         console.log(respuesta.tokenId);
         console.log(respuesta.profileObj);
+
+        axios({
+            method: "POST",
+            url: "http://localhost:5000/api/auth/googleLogin",
+            data: { tokenId: respuesta.tokenId }
+        }).then(res => console.log(res));
     }
+
     return (
         <GoogleLogin
-        clientId="825534615979-g87f8lf5ssvnch65gqj8fdjk1rbqe8ei.apps.googleusercontent.com"
-        buttonText="Login"
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
-        cookiePolicy={'single_host_origin'}
-        isSignedIn={true}
-      />
+            clientId="825534615979-g87f8lf5ssvnch65gqj8fdjk1rbqe8ei.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+            cookiePolicy={'single_host_origin'}
+            isSignedIn={true}
+        />
     )
-    
-   
+
+
     // const history = useHistory();
 
     // const [userData, setUserData] = useState({
