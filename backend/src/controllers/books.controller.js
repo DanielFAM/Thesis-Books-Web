@@ -30,11 +30,7 @@ booksCtrl.deleteBook = async (req, res) => {
 };*/
 
 booksCtrl.searchAll = async (req, res) => {
-    if(!req.body) return res.status(404).json({error:'no data provided'});
-    const { search, index } = req.body;
-    if (search === "" || search === null) return res.status(404).json({error:'No word provided'}); 
-    const bookURL = "https://www.googleapis.com/books/v1/volumes";
-    axios.get(bookURL, { params: {  q: search, maxResults: 40,startIndex: index}}).then(({ data }) => {
+    axios.get("https://www.googleapis.com/books/v1/volumes", { params: {  q: req.params.keyword, maxResults: 40, startIndex: parseInt(req.params.startindex)}}).then(({ data }) => {
         res.status(200).send({data: data.items, total:data.totalItems});
     }).catch(err => res.status(err.response.status).send('Error'));
 };

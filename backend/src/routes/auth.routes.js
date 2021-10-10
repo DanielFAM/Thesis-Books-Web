@@ -4,7 +4,8 @@ const router = Router();
 const { signUp, 
         signIn, 
         me,
-        verifyToken 
+        verifyToken,
+        googleLogin
 } = require('../controllers/auth.controller');
 
 const { 
@@ -21,5 +22,7 @@ router.get('/me', me);
 router.post('/signin', signIn);
 
 router.get('/verifyToken', verifyToken);
+
+router.post('/googlelogin',googleLogin);
 
 module.exports = router;
