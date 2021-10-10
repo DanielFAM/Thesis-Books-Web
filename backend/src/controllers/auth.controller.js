@@ -22,7 +22,7 @@ authCtrl.signUp = async (req, res) => {
     const token = jwt.sign({id: savedUser._id}, process.env.SECRET,{
         expiresIn: 86400 //24 horas
     });  
-    res.status(200).json({token})
+    res.status(200).json({token});
 };
 
 authCtrl.me = async (req,res) => {
@@ -77,10 +77,47 @@ authCtrl.verifyToken = async (req, res) => {
 authCtrl.googleLogin = (req, res) => {
     const { tokenId } = req.body;
 
-    client.verifyIdToken({tokenId, audience: '825534615979-g87f8lf5ssvnch65gqj8fdjk1rbqe8ei.apps.googleusercontent.com'})
+    client.verifyIdToken({idToken: tokenId, audience: '825534615979-g87f8lf5ssvnch65gqj8fdjk1rbqe8ei.apps.googleusercontent.com'})
         .then(response => {
             const {email_verified, name, email} = response.payload;
-            console.log(response.payload);
+            if(email_verified) {
+                User.findOne({email}).exec((err, user) => {
+                    if (err) {
+                        return res.status(404).json({
+                            error: "something went wrong..."
+                        });
+                    }else{
+                        if (user) {
+                            const token = jwt.sign({id: user._id}, process.env.SECRET,{
+                                expiresIn: 86400 //24 horas
+                            });
+                            const {_id, username, email}  = user;
+                            res.status(200).json({
+                                token,
+                                user: {_id,username, email}
+                            });
+                        }else{
+                            let password = User.encryptPassword(email+process.env.SECRET);
+                            let newUser = new User({username: name, email, password});
+                            newUser.save((err, data) => {
+                                if (err) {
+                                    return res.status(404).json({
+                                        error: "something went wrong..."
+                                    });
+                                }
+                                const token = jwt.sign({id: data._id}, process.env.SECRET,{
+                                    expiresIn: 86400 //24 horas
+                                });
+                                const {_id, username, email}  = newUser;
+                                res.status(200).json({
+                                    token,
+                                    user: {_id,username, email}
+                                });
+                            });
+                        }
+                    }
+                });
+            }
         });
 
     console.log();
