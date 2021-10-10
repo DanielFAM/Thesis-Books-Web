@@ -2,17 +2,17 @@ import React from 'react';
 import { Redirect } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
 
-const Home = () => {
+const Explorer = () => {
     const history = useHistory();
 
     const logOut = () => {
         localStorage.setItem('userAutho', 'false');
         history.push("/")
     }
-    return ((localStorage.getItem('rememberUser') === "true")
+    return ((localStorage.getItem('userAutho') !== 'false')
         ?
         <div>
-            ESTE ES EL HOME
+            <div>HOLA BUSCA LO QUE DESEAS</div>
             <button onClick={logOut}>LogOut</button>
         </div>
         : <div>
@@ -22,4 +22,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Explorer;
